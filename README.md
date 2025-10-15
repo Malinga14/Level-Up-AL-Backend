@@ -23,12 +23,10 @@ Level-Up-AL-Backend provides the foundational backend logic, data management, an
 
 ## Tech Stack
 
-- **Language:** Java (100%)
-- **Frameworks:** (Add frameworks such as Spring Boot, Jakarta EE, etc. if used)
-- **Build Tools:** (e.g., Maven, Gradle)
-- **Database:** (e.g., MySQL, PostgreSQL, MongoDB, etc.)
-- **Testing:** (e.g., JUnit, Mockito)
-- **Other Libraries:** (List additional libraries or dependencies used)
+- **Language:** Java
+- **Frameworks:** Spring Boot
+- **Build Tools:** Maven
+- **Database:** MySQL
 
 ## Project Structure
 
