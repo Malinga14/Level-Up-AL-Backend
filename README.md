@@ -23,10 +23,29 @@ Level-Up-AL-Backend provides the foundational backend logic, data management, an
 
 ## Tech Stack
 
-- **Language:** Java
-- **Frameworks:** Spring Boot
+- **Language:** Java (JDK 23)
+- **Frameworks:** Spring Boot (3.3.5)
 - **Build Tools:** Maven
-- **Database:** MySQL
+- **Database:** MySQL (Connector/J 9.1.0)
+- **ORM:** Spring Data JPA
+- **API Documentation:** SpringDoc OpenAPI
+- **Object Mapping:** ModelMapper
+- **Security:** Spring Security, JWT (io.jsonwebtoken)
+- **Mail:** Spring Boot Starter Mail, Javax Mail
+- **Testing:** JUnit
+- **Lombok:** Used for boilerplate code reduction
+
+## Main Dependencies (`pom.xml`)
+
+- `spring-boot-starter-web`: RESTful web services
+- `spring-boot-starter-data-jpa`: ORM and database integration
+- `spring-boot-starter-security`: Authentication and authorization
+- `spring-boot-starter-mail` and `javax.mail`: Email sending support
+- `mysql-connector-j`: MySQL connectivity
+- `modelmapper`: DTO/entity conversion
+- `springdoc-openapi-starter-webmvc-ui`: API documentation (Swagger UI)
+- `lombok`: Reduces boilerplate code
+- `jjwt-api`, `jjwt-impl`, `jjwt-jackson`: JWT authentication
 
 ## Project Structure
 
@@ -35,41 +54,53 @@ Level-Up-AL-Backend/
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── (your packages and code)
+│   │   │   └── lk/edu/icet110/
+│   │   │        ├── config/          # Configuration classes (Security, ApplicationConfig, etc.)
+│   │   │        ├── service/         # Service interfaces and implementations
+│   │   │        ├── repository/      # JPA repositories
+│   │   │        ├── entity/          # JPA entities
+│   │   │        ├── dto/             # Data Transfer Objects
+│   │   │        ├── auth/            # Authentication DTOs
+│   │   │        └── demo/            # Demo controller
 │   │   └── resources/
-│   │       └── (configuration files, application.properties)
+│   │       └── application.properties
 │   └── test/
 │       └── java/
-├── pom.xml or build.gradle
+├── pom.xml
 └── README.md
 ```
 
-- **src/main/java**: Application source code
-- **src/main/resources**: Configuration and resource files
-- **src/test/java**: Unit and integration tests
-- **pom.xml / build.gradle**: Project build configuration
+- **src/main/java/lk/edu/icet110/config**: Application and security configuration beans
+- **src/main/java/lk/edu/icet110/service**: Service interfaces and implementations (business logic)
+- **src/main/java/lk/edu/icet110/repository**: Data access layer using Spring Data JPA
+- **src/main/java/lk/edu/icet110/entity**: JPA entity classes for DB tables
+- **src/main/java/lk/edu/icet110/dto**: DTOs for request/response models
+- **src/main/java/lk/edu/icet110/auth**: Authentication-related DTOs (JWT)
+- **src/main/java/lk/edu/icet110/demo**: Example controller
 
 ## Design Patterns
 
-Common Java backend design patterns (include those relevant to your implementation):
-- **Singleton**: For shared configuration or services
-- **Factory**: For object creation logic
-- **Repository**: For data access layer
-- **Service Layer**: For business logic
-- **Controller**: For handling HTTP requests
-
-(Expand with specific patterns used in your codebase.)
+- **Singleton**: Beans defined with `@Configuration` and `@Bean` are singletons in Spring's context (e.g., ModelMapper, PasswordEncoder).
+- **Factory**: Bean methods in configuration classes provide factory-like instantiation.
+- **Repository**: All database access follows the Repository pattern (`StudentRepository`, `UserRepository`, etc.).
+- **Service Layer**: Business logic encapsulated in service classes (`StudentServiceImpl`, `AuthenticationService`).
+- **DTO Pattern**: Separation of entity and transport layer objects.
+- **Builder**: Used with Lombok's `@Builder` for creating complex objects.
+- **Controller**: REST endpoints via `@RestController`.
 
 ## Security
 
-Security practices typically used in Java backend projects:
-- **Authentication & Authorization**: (e.g., JWT, OAuth2, Spring Security)
-- **Input Validation & Sanitization**
-- **Error Handling & Logging**
-- **HTTPS Enforcement**
-- **Environment-based Configuration**
+Implemented using industry standards and best practices:
 
-(Add details based on your actual security implementation.)
+- **Spring Security**: Centralized authentication and authorization.
+- **JWT Authentication**: Secure stateless authentication using JSON Web Tokens (see `JwtService`, `AuthenticationService`, `SecurityConfiguration`).
+- **Password Hashing**: Passwords are hashed using BCrypt (`PasswordEncoder` bean), never stored in plaintext.
+- **Role-based Access Control**: User roles managed via JPA entities.
+- **CORS Configuration**: Restricted origins and HTTP methods for API access (`SecurityConfiguration`).
+- **Custom AuthenticationProvider**: Uses DAO and custom UserDetailsService.
+- **Session Management**: Stateless (JWT), avoids server-side sessions.
+- **Error Handling**: Exception handling for authentication errors (`UsernameNotFoundException`, etc.).
+- **Environment-based Configuration**: Uses `application.properties`.
 
 ## Getting Started
 
@@ -79,21 +110,20 @@ Security practices typically used in Java backend projects:
    ```
 
 2. **Install dependencies:**  
-   Use Maven or Gradle to install project dependencies.
+   Use Maven to install project dependencies.
 
 3. **Configure the application:**  
-   Update configuration files in `src/main/resources` as needed.
+   - Edit `src/main/resources/application.properties` for DB and mail settings.
 
 4. **Run the application:**  
    ```bash
    ./mvnw spring-boot:run
-   # or
-   ./gradlew bootRun
    ```
 
 ## API Documentation
 
-(Describe your API endpoints or link to OpenAPI/Swagger documentation if available.)
+- Swagger UI available via SpringDoc OpenAPI (`springdoc-openapi-starter-webmvc-ui`).
+- Access documentation at `/swagger-ui/index.html` after running the app.
 
 ## Contributing
 
